@@ -36,7 +36,7 @@ class Test{
     }
 }
 ```
-补充：详细的看JVMS吧。[JVMS类的访问权限](https://docs.oracle.com/javase/specs/jvms/se9/html/jvms-4.html#jvms-4.1-200-E.1)
+补充：关于类的访问标志详细的看JVMS吧。[JVMS类的访问权限](https://docs.oracle.com/javase/specs/jvms/se9/html/jvms-4.html#jvms-4.1-200-E.1)
 
 ## 3、提供包的整体注释说明。
 >在JavaDoc中会显示包的注释
