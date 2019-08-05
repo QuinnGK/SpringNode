@@ -29,3 +29,6 @@ ApplicationContext context = new AnnotationConfigApplicationContext(com.springin
 ```
 * SpringBean的生命周期
 
+
+实际上getBean原比上图中的步骤复杂的多，上图也只是说了一个大概流程，详细请看Srping.getBean()方法解析
+
