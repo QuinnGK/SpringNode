@@ -4,7 +4,11 @@
 ```java
     //为True时忽略警告，否则为false时则抛出异常
 	private boolean ignoreWarnings = true;
-    //FetchSize最主要是为了减少网络交互次数设计的。 访问 ResultSet时，如果它每次只从 服务器上读取一行数据，则会产生大量的开销。setFetchSize的意思是当调用 rs.next时，ResultSet 会一次性从服务器上取得多少行数据回来，这样在下次 rs.next时， 它可以直接从内存中获取数 据而不需要网络交互， 提高了效率。 这个设置可能会被某些 JDBC 驱动忽略，而且设置过大 也会造成内存的上升 。
+    //FetchSize最主要是为了减少网络交互次数设计的。 访问 ResultSet时，
+	//如果它每次只从 服务器上读取一行数据，则会产生大量的开销。
+	//setFetchSize的意思是当调用 rs.next时，ResultSet 会一次性从服务器上取得多少行数据回来，
+	//这样在下次 rs.next时， 它可以直接从内存中获取数 据而不需要网络交互， 提高了效率。 
+	//这个设置可能会被某些 JDBC 驱动忽略，而且设置过大 也会造成内存的上升 。
 	private int fetchSize = -1;
     //MaxRows 将此 Statement对象生成的所有 ResultSet对象可以包含的最大行数限制设置为给定数。
 	private int maxRows = -1;
