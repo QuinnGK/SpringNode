@@ -24,7 +24,7 @@ import org.springframework.lang.NonNullFields;
 ## 2、声明友好类和包常量；　
 >在这个类中可以定义本包中使用的类。
 ```java
-package cn.infisa.chronic2.base;
+package cn.infisa.base;
 
 /**
  * CreateTime: 2019-08-04 00:44
