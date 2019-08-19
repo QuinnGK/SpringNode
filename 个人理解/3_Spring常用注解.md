@@ -8,7 +8,8 @@ ANNOTATION_TYPE ,
 CONSTRUCTOR ,  
 FIELD ,  
 LOCAL_VARIABLE ,  
-METHOD , PACKAGE ,  
+METHOD , 
+PACKAGE ,  
 PARAMETER ,  
 TYPE ,  
 TYPE_PARAMETER 
@@ -101,6 +102,15 @@ basePackages属性中可以跟多个String类型的包名。也可以指定为�
 	 * @see org.springframework.web.context.WebApplicationContext#SCOPE_REQUEST
 	 * @see org.springframework.web.context.WebApplicationContext#SCOPE_SESSION
 
+* @Lazy
+> 是否懒加载，只作用于SINGLETON的实例
+
+* @Conditional 
+> 这个注解可以标注在类上，也可以在方法上。实现Condition接口。用来自定义过滤条件
+
+* @Profile
+> 根据不同的profile来注册不同的组件。其实现原理如@Conditional接口，spring实现来ProfileCondition类。通过获得正在使用的Profiles来做对比。
+
 * @Lookup
 >
 
@@ -111,4 +121,6 @@ basePackages属性中可以跟多个String类型的包名。也可以指定为�
 >
 
 * @Import
-> 1.第一种方式 @Import(Test.class) 
+> 1.第一种方式 @Import(Test.class) 直接向IOC容器注册一个组件,也可以注册一个被Configuration修饰的配置类。  
+  2.第二种方式 实现ImportSelector接口，返回需要导入的组件的全类名数组。  
+  3.第三种方式 实现ImportBeanDefinitionRegistrar接口。自定义注册Bean到容器中
