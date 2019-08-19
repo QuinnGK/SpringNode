@@ -51,9 +51,6 @@ public interface Comparator<T> {
 * @AliasFor
 >
 
-* @Order
->
-
 * @NonNull
 >
 
@@ -79,7 +76,11 @@ public interface Comparator<T> {
 > 声明这个类是一个spring的配置类
 
 * @Bean
-> 向IOC容器中注册一个Bean。ID为方法名称。也可在name属性中指定ID
+> 向IOC容器中注册一个Bean。ID为方法名称。也可在name属性中指定ID,initMethod用来指定init-method,destroyMethod用来指定destroy-method。   
+
+* @DependsOn
+* @Primary
+* @Order
 
 * @ComponentScan
 > 用来自动扫描组件，  
