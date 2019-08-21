@@ -100,7 +100,8 @@ public void setDessert(Dessert dessert) {
 includeFilters = Filter[]属性,指定包含哪些组件 但是要将useDefaultFilters设置为false
 excludeFilters = Filter[]属性,指定排除哪些组件
 basePackages属性中可以跟多个String类型的包名。也可以指定为类。如果指定类的话。该类所在的包则会作为基础包
-* ComponentScans
+* @ComponentScans
+> 同ComponentScan，可包含多个ComponentScan
 
 * @PostConstruct
 > 作用于方法上，用来标明执行的初始化方法。JSR250中提出
