@@ -2,7 +2,7 @@
 ---
 
 * 类图如下
-[BeanDefinition类图]()
+![BeanDefinition类图](https://raw.githubusercontent.com/QuinnGK/SpringNode/master/%E4%B8%AA%E4%BA%BA%E7%90%86%E8%A7%A3/image/BeanDefinition_UML.png)
 
 ---
 再进入真正的主题之前先了解两个接口**BeanMetadataElement**，**AttributeAccessor**
