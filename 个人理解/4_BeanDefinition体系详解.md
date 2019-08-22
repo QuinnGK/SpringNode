@@ -88,62 +88,70 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 ```java
 	//用来装饰BeanDefinition
 	private BeanDefinitionHolder decoratedDefinition;
-
+	//在解析注解时用的到，暂时不晓得用途
 	private AnnotatedElement qualifiedElement;
 	//是否允许缓存
 	boolean allowCaching = true;
 	//工厂方法是否唯一
 	boolean isFactoryMethodUnique = false;
-
-	@Nullable
+	//BeanDefinition的类型用ResolvableType封装
 	volatile ResolvableType targetType;
-
-	/** Package-visible field for caching the determined Class of a given bean definition */
-	@Nullable
+	//BeanDefinition的类型
 	volatile Class<?> resolvedTargetType;
-
-	/** Package-visible field for caching the return type of a generically typed factory method */
-	@Nullable
+	//工厂方法返回的类型。用ResolvableType封装
 	volatile ResolvableType factoryMethodReturnType;
-
-	/** Common lock for the four constructor fields below */
+	//以下四个变量的锁
 	final Object constructorArgumentLock = new Object();
-
-	/** Package-visible field for caching the resolved constructor or factory method */
-	@Nullable
+	//缓存已经解析的构造函数或是工厂方法
 	Executable resolvedConstructorOrFactoryMethod;
-
-	/** Package-visible field that marks the constructor arguments as resolved */
+	//表明构造函数参数是否解析完毕
 	boolean constructorArgumentsResolved = false;
-
-	/** Package-visible field for caching fully resolved constructor arguments */
-	@Nullable
+	//缓存完全解析的构造函数参数
 	Object[] resolvedConstructorArguments;
-
-	/** Package-visible field for caching partly prepared constructor arguments */
-	@Nullable
+	//缓存待解析的构造函数参数
 	Object[] preparedConstructorArguments;
-
-	/** Common lock for the two post-processing fields below */
+	//以下两个变量的锁
 	final Object postProcessingLock = new Object();
-
-	/** Package-visible field that indicates MergedBeanDefinitionPostProcessor having been applied */
+	//表明是否被MergedBeanDefinitionPostProcessor处理过
 	boolean postProcessed = false;
-
-	/** Package-visible field that indicates a before-instantiation post-processor having kicked in */
-	@Nullable
+	//表面是否被BeanPostProcessors处理过
 	volatile Boolean beforeInstantiationResolved;
-
 	@Nullable
+	//不明
 	private Set<Member> externallyManagedConfigMembers;
-
-	@Nullable
+	//InitializingBean中的init回调函数名——afterPropertiesSet会在这里记录，以便进行生命周期回调
 	private Set<String> externallyManagedInitMethods;
-
-	@Nullable
+	//DisposableBean的destroy回调函数名——destroy会在这里记录，以便进行生命周期回调
 	private Set<String> externallyManagedDestroyMethods;
 ```
 
 * ChildBeanDefinition
+> 与RootBeanDefinition对应。子级BeanDefinition用这个表示。
+
+---
+* AnnotatedBeanDefinition
 > 
 
+* AnnotatedGenericBeanDefinition
+> 扩展GenericBeanDefinition类，并提供对AnnotatedBeanDefinition的支持。
+
+* ScannedGenericBeanDefinition
+> 以上两者还需要去搞清楚他们的不同
+
+* ConfigurationClassBeanDefinition
+> 
+
+## 以上用注解的方式来定义Bean的需要在研究一下
+---
+
+* BeanDefinitionHolder
+> 拥有BeanName和别名和BeanDefinition的持有者，将BeanDefinition做了层封装
+
+* BeanComponentDefinition
+> BeanDefinitionHolder的子类，在ReaderEventListener中会注册这个，但没懂式是用来做什么的
+
+* DefaultsDefinition
+> 用于默认定义的标记接口
+
+* DocumentDefaultsDefinition
+> DefaultsDefinition的实现。在BeanDefinitionParserDelegate被使用，用来定义默认的一些Bean信息。
