@@ -8,13 +8,13 @@
 再进入真正的主题之前先了解两个接口**BeanMetadataElement**，**AttributeAccessor**
 
 * BeanMetadataElement
-> 实现这个接口，会使Bean携带元数据。
+> 接口定义了提供访问对象元数据的方法。
 * AttributeAccessor
-> 接口定义了设置和访问对象属性的一般方式。
+> 接口定义了设置和访问对象属性的方法。
 
 ## BeanDefinition
 > Javadoc中这样描述，BeanDefinition是用来描述一个Bean的实例。主要目的是为了允许BeanFactoryPostProcessor来修改其属性值或者metadata。
-这里贴出子类AbstractBeanDefinition的源码
+这里贴出**AbstractBeanDefinition**的源码
 ```java
 public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccessor
 		implements BeanDefinition, Cloneable {
@@ -71,4 +71,79 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 }
 ```
 
+* AttributeAccessorSupport
+> 简单的实现了AttributeAccessor，提供了属性操作的最基本的方式。
+
+* BeanMetadataAttributeAccessor
+> 扩展AttributeAccessorSupport接口，用来保存BeanMetadataAttribute对象。以便跟踪定义源。
+
+* AbstractBeanDefinition 
+> 实现了BeanDefinition所定义的方法。并且继承了BeanMetadataAttributeAccessor。
+
+* GenericBeanDefinition
+> 标准的BeanDefinition的实现。可以通过parentName指定父级BeanDefinition，GenericBeanDefinition的优点是它允许动态定义父依赖关系，而不是将角色“硬编码”为根bean定义。**一般在BeanDefinitionReaderUtils.createBeanDefinition()方法创建一个GenericBeanDefinition。**
+
+* RootBeanDefinition
+> 同GenericBeanDefinition的区别在于，RootBeanDefinition将父子依赖关系通过硬编码的方式来定义。所以在Spring2.5开始，注册RootBeanDefinition首选用GenericBeanDefinition，但是在getBean时，还是会将GenericBeanDefinition转为RootBeanDefinition。在RootBeanDefinition又新添加了一些属性。如下
+```java
+	//用来装饰BeanDefinition
+	private BeanDefinitionHolder decoratedDefinition;
+
+	private AnnotatedElement qualifiedElement;
+	//是否允许缓存
+	boolean allowCaching = true;
+	//工厂方法是否唯一
+	boolean isFactoryMethodUnique = false;
+
+	@Nullable
+	volatile ResolvableType targetType;
+
+	/** Package-visible field for caching the determined Class of a given bean definition */
+	@Nullable
+	volatile Class<?> resolvedTargetType;
+
+	/** Package-visible field for caching the return type of a generically typed factory method */
+	@Nullable
+	volatile ResolvableType factoryMethodReturnType;
+
+	/** Common lock for the four constructor fields below */
+	final Object constructorArgumentLock = new Object();
+
+	/** Package-visible field for caching the resolved constructor or factory method */
+	@Nullable
+	Executable resolvedConstructorOrFactoryMethod;
+
+	/** Package-visible field that marks the constructor arguments as resolved */
+	boolean constructorArgumentsResolved = false;
+
+	/** Package-visible field for caching fully resolved constructor arguments */
+	@Nullable
+	Object[] resolvedConstructorArguments;
+
+	/** Package-visible field for caching partly prepared constructor arguments */
+	@Nullable
+	Object[] preparedConstructorArguments;
+
+	/** Common lock for the two post-processing fields below */
+	final Object postProcessingLock = new Object();
+
+	/** Package-visible field that indicates MergedBeanDefinitionPostProcessor having been applied */
+	boolean postProcessed = false;
+
+	/** Package-visible field that indicates a before-instantiation post-processor having kicked in */
+	@Nullable
+	volatile Boolean beforeInstantiationResolved;
+
+	@Nullable
+	private Set<Member> externallyManagedConfigMembers;
+
+	@Nullable
+	private Set<String> externallyManagedInitMethods;
+
+	@Nullable
+	private Set<String> externallyManagedDestroyMethods;
+```
+
+* ChildBeanDefinition
+> 
 
