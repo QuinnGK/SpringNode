@@ -199,3 +199,6 @@ public class AspectConfig {
 
 * @ControllerAdvice
 > 在这个控制器里声明的@ExceptionHandler可以处理所有控制器所抛出的异常。具体看SpringInAction 7.4节
+
+* @InitBinder
+> 表示为当前控制器注册一个属性编辑器或者其他，只对当前的Controller有效。就是说在当前类请求中到达@Controller方法之前对参数进行处理
